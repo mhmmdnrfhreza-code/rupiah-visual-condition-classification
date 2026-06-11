@@ -85,7 +85,7 @@ dataset/
 `-- 100000/
 ```
 
-Label prediksi diambil dari nama folder kondisi, bukan dari nama file gambar. Dataset lokal saat ini berisi 350 gambar PNG: 7 nominal, 5 kondisi, dan 10 gambar per kombinasi nominal-kondisi. Ukuran folder dataset sekitar 122.79 MB, jadi Anda dapat memutuskan sendiri apakah dataset ikut diunggah ke GitHub.
+Label prediksi diambil dari nama folder kondisi, bukan dari nama file gambar. Dataset lokal berisi 350 gambar PNG: 7 nominal, 5 kondisi, dan 10 gambar per kombinasi nominal-kondisi.
 
 ## Instalasi
 
@@ -162,9 +162,9 @@ Halaman yang tersedia:
 python -m unittest discover -s tests
 ```
 
-## File yang Tidak Perlu Diupload
+## File Tidak Diupload
 
-File/folder berikut sudah masuk `.gitignore`:
+File/Folder Yang Berada Pada `.gitignore`:
 
 - `.venv/`
 - `__pycache__/`
@@ -175,12 +175,6 @@ File/folder berikut sudah masuk `.gitignore`:
 - `.vscode/`
 - `.idea/`
 - `static/uploads/*` kecuali `.gitkeep`
-
-## Catatan Keamanan
-
-- Jangan jalankan `model.pkl` atau `label_encoder.pkl` dari sumber tidak tepercaya. File tersebut dibaca dengan `joblib`, jadi anggap sebagai artifact lokal hasil training sendiri.
-- Jangan commit `.env`, token, credential, atau file upload user.
-- Aplikasi ini ditujukan untuk berjalan lokal. Jika ingin deploy publik, gunakan secret key kuat dan WSGI server produksi.
 
 ## Catatan Keterbatasan
 
