@@ -1,0 +1,10 @@
+Flask>=3.0,<4
+numpy>=1.26,<3
+pandas>=2.2,<3
+opencv-python-headless>=4.10,<5
+scikit-image>=0.25,<0.26
+scikit-learn>=1.7,<2
+matplotlib>=3.9,<4
+seaborn>=0.13,<1
+joblib>=1.4,<2
+pillow>=10,<12

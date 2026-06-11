@@ -1,0 +1,11 @@
+               precision    recall  f1-score   support
+
+        dirty       0.67      0.14      0.24        14
+       normal       0.50      0.93      0.65        14
+      scuffed       0.81      0.93      0.87        14
+scuffed-dirty       0.87      0.93      0.90        14
+         torn       1.00      0.71      0.83        14
+
+     accuracy                           0.73        70
+    macro avg       0.77      0.73      0.70        70
+ weighted avg       0.77      0.73      0.70        70

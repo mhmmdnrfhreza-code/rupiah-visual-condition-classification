@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Informasi Model{% endblock %}
+
+{% block content %}
+<section class="text-section">
+  <p class="eyebrow">Model & Evaluasi</p>
+  <h1>Informasi Model</h1>
+  <p>
+    Ringkasan Metode, Fitur GLCM, Distribusi Dataset, Hasil Evaluasi, Confusion Matrix,
+    dan Contoh Visual Kelas Kondisi Uang.
+  </p>
+</section>
+
+<section class="model-section">
+  <h2>Ringkasan Model</h2>
+  <div class="model-summary-grid">
+    {% for label, value in model.summary %}
+      <div class="model-summary-item">
+        <span>{{ label }}</span>
+        <strong>{{ value }}</strong>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="model-two-column">
+  <div class="model-card">
+    <h2>Kelas Prediksi</h2>
+    <p class="muted-copy">Label berikut adalah kategori kondisi visual uang, bukan fitur GLCM.</p>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Makna</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in model.prediction_classes %}
+            <tr>
+              <td><code>{{ item.label }}</code></td>
+              <td>{{ item.meaning }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="model-card">
+    <h2>Fitur GLCM</h2>
+    <p class="muted-copy">Nilai fitur dari 4 sudut GLCM dirata-ratakan menjadi 6 fitur utama.</p>
+    <div class="feature-list">
+      {% for feature in model.glcm_features %}
+        <div>
+          <strong>{{ feature.name }}</strong>
+          <span>{{ feature.description }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="model-two-column">
+  <div class="model-card">
+    <h2>Distribusi Dataset</h2>
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Kelas</th>
+            <th class="text-end">Jumlah Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in model.dataset_distribution.classes %}
+            <tr>
+              <td><code>{{ item.label }}</code></td>
+              <td class="text-end">{{ item.count }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <th>Total</th>
+            <th class="text-end">{{ model.dataset_distribution.total }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="split-grid">
+      {% for label, value in model.split_summary.items() %}
+        <div>
+          <span>{{ label }}</span>
+          <strong>{{ value if value is not none else "Tidak tersedia" }}</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="model-card">
+    <h2>Evaluasi Model</h2>
+    <div class="metric-grid">
+      {% for metric in model.metrics %}
+        <div>
+          <span>{{ metric.label }}</span>
+          <strong>{{ metric.value }}</strong>
+        </div>
+      {% endfor %}
+    </div>
+    <p class="system-note mt-3">
+      Hasil Training Model Berasal Dari <code>artifacts/metrics.json</code>
+    </p>
+  </div>
+</section>
+
+<section class="model-section">
+  <h2>Confusion Matrix</h2>
+  <div class="confusion-layout">
+    <div class="confusion-image">
+      <img src="{{ url_for('static', filename=model.confusion_matrix.path) }}" alt="Confusion Matrix Model">
+    </div>
+    <div>
+      <p>
+        Confusion matrix menunjukkan perbandingan antara label asli dan label prediksi model.
+        Nilai pada diagonal utama menunjukkan prediksi yang benar, sedangkan nilai di luar
+        diagonal menunjukkan kelas yang tertukar.
+      </p>
+      <p class="system-note">
+        Sumber Training <code>artifacts/confusion_matrix.png</code>, Disalin Ke Folder Static Untuk Ditampilkan.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="model-section">
+  <h2>Contoh Visual Kondisi Uang</h2>
+  <div class="example-grid">
+    {% for item in model.visual_examples %}
+      <article class="example-card">
+        <div class="example-image-frame">
+          <img src="{{ url_for('static', filename=item.image) }}" alt="Contoh kondisi {{ item.label }}">
+        </div>
+        <div class="example-card-body">
+          <h3>{{ item.label }}</h3>
+          <strong>{{ item.status }}</strong>
+          <p>{{ item.description }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="model-two-column">
+  <div class="model-card">
+    <h2>Alur Kerja Model</h2>
+    <ol class="workflow-list">
+      {% for step in model.workflow_steps %}
+        <li>{{ step }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+
+  <div class="model-card limitation-card">
+    <h2>Keterbatasan Model</h2>
+    <p>
+      Model ini hanya menilai kondisi visual uang berdasarkan tekstur citra. Sistem tidak digunakan
+      untuk mendeteksi keaslian uang dan tidak menggantikan pemeriksaan resmi dari Bank Indonesia.
+    </p>
+    <div class="limitation-list">
+      {% for label, impact in model.limitations %}
+        <div>
+          <strong>{{ label }}</strong>
+          <span>{{ impact }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

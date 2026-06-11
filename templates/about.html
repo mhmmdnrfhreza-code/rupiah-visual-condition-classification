@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Tentang RVCC{% endblock %}
+
+{% block content %}
+<section class="text-section">
+  <p class="eyebrow">Tentang Metode</p>
+  <h1>GLCM untuk Klasifikasi Kondisi Visual Rupiah</h1>
+  <p>
+    Aplikasi Ini Memakai Gray Level Co-occurrence Matrix Untuk Membaca Hubungan Pasangan Piksel Pada Citra Grayscale. Nilai Tekstur Yang Dihasilkan Dipakai Sebagai Input Model Random Forest Untuk Memprediksi Kondisi Visual Uang.
+  </p>
+</section>
+
+<section class="about-grid">
+  <div>
+    <h2>Fitur GLCM</h2>
+    <ul>
+      <li>Contrast mengukur perbedaan intensitas piksel.</li>
+      <li>Dissimilarity mengukur ketidakmiripan tekstur.</li>
+      <li>Homogeneity mengukur keseragaman tekstur.</li>
+      <li>Energy dan ASM mengukur keteraturan distribusi tekstur.</li>
+      <li>Correlation mengukur hubungan antar piksel.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Dataset dan Batasan</h2>
+    <p>
+      Dataset terdiri dari nominal Rp1.000 sampai Rp100.000 dengan label normal,
+      dirty, scuffed, scuffed-dirty, dan torn. Label yang diprediksi adalah kondisi
+      visual, bukan nominal dan bukan keaslian uang.
+    </p>
+    <p>
+      Akurasi dapat turun jika gambar terlalu buram, pencahayaan tidak stabil, atau
+      latar belakang berbeda jauh dari dataset training.
+    </p>
+  </div>
+</section>
+{% endblock %}

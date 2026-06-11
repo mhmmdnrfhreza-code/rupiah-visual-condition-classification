@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Identifikasi Kelayakan Visual Rupiah{% endblock %}
+
+{% block content %}
+<section class="app-hero">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <p class="eyebrow">GLCM + Random Forest</p>
+      <h1>Identifikasi Kelayakan Visual Uang Kertas Rupiah</h1>
+      <p class="hero-copy">
+        Unggah Gambar Uang Kertas Rupiah Untuk Mengekstraksi Fitur Tekstur GLCM dan
+        Mengklasifikasikan Kondisi Visualnya.
+      </p>
+    </div>
+    <div class="col-lg-5">
+      <div class="method-panel">
+        <span>Preprocessing</span>
+        <strong>Resize 256 x 256 + Grayscale</strong>
+        <span>Fitur</span>
+        <strong>Contrast, Dissimilarity, Homogeneity, Energy, Correlation, ASM</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-grid">
+  <div class="upload-card">
+    <h2>Upload Gambar</h2>
+    <p>File PNG, JPG, atau JPEG. Gunakan Gambar Uang Kertas Yang Jelas dan Tidak Buram.</p>
+    <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data">
+      <label class="form-label" for="file">Gambar Uang Kertas</label>
+      <input class="form-control" type="file" id="file" name="file" accept=".png,.jpg,.jpeg,image/png,image/jpeg" required>
+      <div class="preview-frame mt-3">
+        <img id="imagePreview" alt="Preview gambar yang dipilih" hidden>
+        <span id="previewPlaceholder">Preview Gambar Akan Terlihat Di Sini.</span>
+      </div>
+      <button class="btn btn-primary w-100 mt-3" type="submit">Prediksi Kondisi</button>
+    </form>
+  </div>
+
+  <div class="info-panel">
+    <h2>Kategori Kondisi</h2>
+    <div class="status-list">
+      <div><strong>Normal</strong><span>Uang Terlihat Baik atau Bersih.</span></div>
+      <div><strong>Dirty</strong><span>Uang Terlihat Kotor (Vandalisme).</span></div>
+      <div><strong>Scuffed</strong><span>Uang Terlihat Kusut atau Lecek.</span></div>
+      <div><strong>Scuffed-dirty</strong><span>Uang Terlihat Kusut/Lecek Sekaligus Kotor.</span></div>
+      <div><strong>Torn</strong><span>Uang Terlihat Sobek atau Rusak.</span></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

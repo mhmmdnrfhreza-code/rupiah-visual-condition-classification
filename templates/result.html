@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Hasil Prediksi{% endblock %}
+
+{% block content %}
+<section class="result-header">
+  <div>
+    <p class="eyebrow">Hasil Prediksi</p>
+    <h1>{{ result.condition_display }}</h1>
+    <p class="hero-copy">{{ result.status_description }}</p>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('index') }}">Upload Gambar Lain</a>
+</section>
+
+<section class="result-grid">
+  <div class="result-image-panel">
+    <img src="{{ result.image_url }}" alt="Gambar uang yang diunggah">
+  </div>
+
+  <div class="result-summary">
+    <div class="summary-item">
+      <span>Kondisi Visual</span>
+      <strong>{{ result.condition_display }}</strong>
+    </div>
+    <div class="summary-item">
+      <span>Status Kelayakan Visual</span>
+      <strong class="status-pill {{ result.status_class }}">{{ result.visual_status }}</strong>
+    </div>
+    <div class="summary-item">
+      <span>Confidence</span>
+      <strong>{{ result.confidence_display }}</strong>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section">
+  <h2>Nilai Fitur GLCM</h2>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Fitur</th>
+          <th>Nilai Rata-rata</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for name, value in result.features.items() %}
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ "%.6f"|format(value) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="system-note">
+    Sistem ini hanya menilai kondisi visual berdasarkan tekstur citra. Hasil ini bukan validasi keaslian uang dan bukan keputusan resmi kelayakan tukar.
+  </p>
+</section>
+{% endblock %}
